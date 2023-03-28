@@ -160,7 +160,7 @@ body {
 }
 
 .layout-header {
-  background: white;
+  background: #fafafa;
   opacity: 0.5
 }
 

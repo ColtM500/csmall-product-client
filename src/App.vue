@@ -11,8 +11,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
-  /*color: #2c3e50;*/
-  color: white;
+  color: #2c3e50;
+  /*color: white;*/
 }
 
 nav {
