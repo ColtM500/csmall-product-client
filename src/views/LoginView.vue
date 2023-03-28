@@ -1,8 +1,6 @@
 <template>
-
-
   <div>
-    <el-card class="box-card">
+    <el-card class="box-card" style="opacity: 0.9; margin-top: 90px">
       <div slot="header" class="clearfix">
         <span>登录验证</span>
         <el-button style="float: right; padding: 3px 0" type="text"></el-button>
@@ -64,7 +62,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .box-card{
   margin:auto;
   width: 600px;
@@ -82,5 +80,12 @@ export default {
 .password {
   margin-left: 65px;
   width: 400px;
+}
+
+body{
+  background-image: url("../assets/login.png");
+  background-size: cover;/*把背景图片设置为封面*/
+  /*background-repeat: no-repeat;*/
+  text-align: center;
 }
 </style>
