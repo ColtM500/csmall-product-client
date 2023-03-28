@@ -8,12 +8,27 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    redirect: '/sys-admin/index', // 默认跳转到这里
+    children: [
+      {
+        path: '/sys-admin/index',
+        component: () => import('../views/sys-admin/IndexView.vue')
+      },
+      {
+        path: '/sys-admin/temp/album/add-new',
+        component: () => import('../views/sys-admin/temp/AlbumAddNewView.vue')
+      },
+      {
+        path: '/sys-admin/temp/album/list',
+        component: () => import('../views/sys-admin/temp/AlbumListView.vue')
+      }
+    ]
   },
   {
     path: '/about',
     name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import('../views/AboutView.vue')
   },
   {
     path: '/login',

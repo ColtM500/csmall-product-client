@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-card class="box-card" style="opacity: 0.9; margin-top: 90px">
+    <el-card class="box-card" style="opacity: 0.78; margin-top: 90px">
       <div slot="header" class="clearfix">
-        <span>登录验证</span>
+        <span>管理员登录</span>
         <el-button style="float: right; padding: 3px 0" type="text"></el-button>
       </div>
 <!--      <div v-for="o in 4" :key="o" class="text item">-->
@@ -85,7 +85,6 @@ export default {
 body{
   background-image: url("../assets/login.png");
   background-size: cover;/*把背景图片设置为封面*/
-  /*background-repeat: no-repeat;*/
   text-align: center;
 }
 </style>
