@@ -39,7 +39,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="submitEditForm()">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -52,6 +52,7 @@ export default {
       tableData: [],
       dialogFormVisible: false,
       editForm: {
+        id: '',
         name: '',
         description: '',
         sort: ''
@@ -61,7 +62,62 @@ export default {
   },
   methods: {
     showEditFormDialog(album) {
-      this.dialogFormVisible = true;
+
+      let url = 'http://localhost:6080/albums/' + album.id;
+      console.log('url = ' + url);
+
+      this.axios.get(url).then((response) => {
+        let jsonResult = response.data;
+        if (jsonResult.state == 20000) {
+          this.dialogFormVisible = true;
+          this.editForm = album;
+        } else if (jsonResult.state == 40400) {
+          this.$alert(jsonResult.message, '操作失败', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.loadAlbumList();
+            }
+          });
+        } else {
+          this.$alert(jsonResult.message, '操作失败', {
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
+        }
+      });
+    },
+    submitEditForm(){
+      let url = 'http://localhost:6080/albums/' + this.editForm.id + '/update';
+      console.log('url = ' + url);
+
+      let formData = this.qs.stringify(this.editForm);
+
+      this.axios.post(url, formData).then((response) => {
+        let jsonResult = response.data;
+        if (jsonResult.state == 20000) {
+          this.$message({
+            message: '修改相册成功！',
+            type: 'success'
+          });
+          this.dialogFormVisible = false;
+          this.loadAlbumList();
+        } else if (jsonResult.state == 40400) {
+          this.$alert(jsonResult.message, '操作失败', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.dialogFormVisible = false;
+              this.loadAlbumList();
+            }
+          });
+        } else {
+          this.$alert(jsonResult.message, '操作失败', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.dialogFormVisible = false;
+            }
+          });
+        }
+      });
     },
     openDeleteConfirm(album) {
       let message = '此操作将永久删除【' + album.name + '】相册，是否继续？';
