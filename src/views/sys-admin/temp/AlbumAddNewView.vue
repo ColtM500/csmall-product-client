@@ -72,6 +72,7 @@ export default {
                 message: '添加相册成功!',
                 type: 'success'
               });
+              this.resetForm(formName);
             } else {
               this.$alert(jsonResult.message, '操作失败',{
                 confirmButtonText: '确定',
