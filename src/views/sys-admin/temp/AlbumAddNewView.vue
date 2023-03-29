@@ -62,9 +62,8 @@ export default {
           let url = 'http://localhost:6080/albums/add-new';
           console.log('url=' + url);
 
-          let formData = 'name=' + this.ruleForm.name
-                       + '&description=' + this.ruleForm.description
-                       + '&sort=' + this.ruleForm.sort;
+          let  formData = this.qs.stringify(this.ruleForm);
+          console.log('formData = ' + formData)
 
           this.axios.post(url, formData).then((response) => {
             let jsonResult = response.data;
