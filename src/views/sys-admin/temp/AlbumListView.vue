@@ -169,7 +169,11 @@ export default {
       });
     }
   },
+  created() {
+    //打开浏览器就有这东西
+  },
   mounted() {
+    //这个也是打开浏览器就有这东西 但是在created之后执行
     this.loadAlbumList();
   }
 }
