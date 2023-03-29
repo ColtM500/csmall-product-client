@@ -68,7 +68,17 @@ export default {
 
           this.axios.post(url, formData).then((response) => {
             let jsonResult = response.data;
-
+            if (jsonResult.state == 20000){
+              this.$message({
+                message: '添加相册成功!',
+                type: 'success'
+              });
+            } else {
+              this.$alert(jsonResult.message, '操作失败',{
+                confirmButtonText: '确定',
+                callback: action =>{},
+              });
+            }
           })
         } else {
           console.log('error submit!!');
