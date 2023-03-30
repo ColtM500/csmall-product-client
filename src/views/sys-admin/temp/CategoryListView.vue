@@ -117,7 +117,7 @@ export default {
         let jsonResult = response.data;
         if (jsonResult.state == 20000) {
           this.dialogFormVisible = true;
-          this.editForm = album;
+          this.editForm = category;
         } else if (jsonResult.state == 40400) {
           this.$alert(jsonResult.message, '操作失败', {
             confirmButtonText: '确定',
@@ -134,7 +134,7 @@ export default {
       });
     },
     submitEditForm(){
-      let url = 'http://localhost:6080/albums/' + this.editForm.id + '/update';
+      let url = 'http://localhost:6080/categorys/' + this.editForm.id + '/update';
       console.log('url = ' + url);
 
       let formData = this.qs.stringify(this.editForm);
@@ -166,26 +166,26 @@ export default {
         }
       });
     },
-    openDeleteConfirm(album) {
-      let message = '此操作将永久删除【' + album.name + '】相册，是否继续？';
+    openDeleteConfirm(category) {
+      let message = '此操作将永久删除【' + category.name + '】相册，是否继续？';
       this.$confirm(message, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.handleDelete(album);
+        this.handleDelete(category);
       }).catch(() => {
       });
     },
-    handleDelete(album) {
-      let url = 'http://localhost:6080/albums/' + album.id + '/delete';
+    handleDelete(category) {
+      let url = 'http://localhost:6080/categories/' + category.id + '/delete';
       console.log('url = ' + url);
 
       this.axios.get(url).then((response) => {
         let jsonResult = response.data;
         if (jsonResult.state == 20000) {
           this.$message({
-            message: '删除【' + album.name + '】相册成功！',
+            message: '删除【' + category.name + '】相册成功！',
             type: 'success'
           });
           this.loadCategoryList();
