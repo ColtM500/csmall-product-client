@@ -43,7 +43,7 @@
                     <i class="el-icon-circle-plus"></i>
                     <span>添加品牌</span>
                   </el-menu-item>
-                  <el-menu-item index="2-4">
+                  <el-menu-item index="/sys-admin/temp/brand/list">
                     <i class="el-icon-s-operation"></i>
                     <span>品牌列表</span>
                   </el-menu-item>

@@ -31,6 +31,10 @@ const routes = [
         path: '/sys-admin/temp/category/list-by-parent',
         component: () => import('../views/sys-admin/temp/CategoryListView.vue')
       },
+      {
+        path: '/sys-admin/temp/brand/list',
+        component: () => import('../views/sys-admin/temp/BrandListView.vue')
+      },
     ]
   },
   {
