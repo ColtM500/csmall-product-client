@@ -47,11 +47,11 @@
                     <i class="el-icon-s-operation"></i>
                     <span>品牌列表</span>
                   </el-menu-item>
-                  <el-menu-item index="2-5">
+                  <el-menu-item index="/sys-admin/temp/category/add-new">
                     <i class="el-icon-circle-plus"></i>
                     <span>添加类别</span>
                   </el-menu-item>
-                  <el-menu-item index="2-6">
+                  <el-menu-item index="/sys-admin/temp/category/list-by-parent">
                     <i class="el-icon-s-operation"></i>
                     <span>类别列表</span>
                   </el-menu-item>
@@ -81,7 +81,7 @@
                   </el-menu-item>
                 </el-submenu>
               <!-- 商品管理 -->
-              <el-submenu index="3">
+              <el-submenu index="3" disabled>
                   <template slot="title">
                     <i class="el-icon-s-goods"></i>
                     <span>商品管理</span>

@@ -22,7 +22,15 @@ const routes = [
       {
         path: '/sys-admin/temp/album/list',
         component: () => import('../views/sys-admin/temp/AlbumListView.vue')
-      }
+      },
+      {
+        path: '/sys-admin/temp/category/add-new',
+        component: () => import('../views/sys-admin/temp/CategoryAddView.vue')
+      },
+      {
+        path: '/sys-admin/temp/category/list-by-parent',
+        component: () => import('../views/sys-admin/temp/CategoryListView.vue')
+      },
     ]
   },
   {
