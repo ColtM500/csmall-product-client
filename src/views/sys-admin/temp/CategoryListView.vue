@@ -5,6 +5,7 @@
         <i class="el-icon-s-promotion"></i> 后台管理
       </el-breadcrumb-item>
       <el-breadcrumb-item>分类列表</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="item in history" :key="item.id"><span v-text="item.name"></span></el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-divider></el-divider>
@@ -12,7 +13,7 @@
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="id" label="ID" width="60" align="center"></el-table-column>
       <el-table-column prop="name" label="名称" width="200" header-align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="description" label="简介" header-align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="keywords" label="关键词列表" header-align="center" show-overflow-tooltip></el-table-column>
       <el-table-column prop="sort" label="排序序号" width="100" align="center"></el-table-column>
       <el-table-column label="是否启用" width="120" align="center">
         <template slot-scope="scope">
@@ -52,7 +53,7 @@
       </el-table-column>
     </el-table>
 
-    <div style="margin-top: 10px; text-align: right;">
+    <div v-if="currentParentId!=0" style="margin-top: 10px; text-align: right;">
       <el-button size="small" @click="goBack()">返回</el-button>
     </div>
 
@@ -96,9 +97,11 @@ export default {
   },
   methods: {
     goBack(){
-      let parentCategory = this.history[this.history.length - 1]; //从历史数组中的长度-1 拿出一个parentCategory 每一层点下去的history数组长度是增加的
-      this.history.pop();//为了实现返回 将历史数组中的最后一个元素挤出 去除已返回的元素id
-      this.currentParentId = parentCategory.parentId; //当前级别id为 父级分类的分级id
+      //从历史数组中的长度-1 拿出一个parentCategory
+      // 每一层点下去的history数组长度是增加的 所以通过这种方式记录历史的父级类别
+      let parentCategory = this.history[this.history.length - 1];
+      this.history.pop();//为了实现返回 将历史数组中的最后一个元素挤出 去除已返回的元素id 不然点了一次返回之后就点不动了 因为已经返回了始终为该id
+      this.currentParentId = parentCategory.parentId; //当前级别id为 父级分类的分级id; 拿一个父级id给现在的全局参数的类别id
       this.loadCategoryList(); //加载列表
     },
     showSubCategoryList(category){
