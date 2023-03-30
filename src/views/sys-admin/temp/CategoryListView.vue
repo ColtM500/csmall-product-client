@@ -52,7 +52,11 @@
       </el-table-column>
     </el-table>
 
-    <!-- 以下是修改相册的弹出表单Dialog -->
+    <div style="margin-top: 10px; text-align: right;">
+      <el-button size="small" @click="goBack()">返回</el-button>
+    </div>
+
+    <!-- 以下是修改类别的弹出表单Dialog -->
     <el-dialog title="修改类别" :visible.sync="dialogFormVisible">
       <el-form :model="editForm">
         <el-form-item label="名称" :label-width="formLabelWidth">
@@ -79,6 +83,7 @@ export default {
     return {
       tableData: [],
       currentParentId:0,  //当前默认看的一级类别
+      history:[], //用一个数组记录点击过的按钮 点击的该类别的depth
       dialogFormVisible: false,
       editForm: {
         id: '',
@@ -90,7 +95,14 @@ export default {
     }
   },
   methods: {
+    goBack(){
+      let parentCategory = this.history[this.history.length - 1]; //从历史数组中的长度-1 拿出一个parentCategory 每一层点下去的history数组长度是增加的
+      this.history.pop();//为了实现返回 将历史数组中的最后一个元素挤出 去除已返回的元素id
+      this.currentParentId = parentCategory.parentId; //当前级别id为 父级分类的分级id
+      this.loadCategoryList(); //加载列表
+    },
     showSubCategoryList(category){
+      this.history[category.depth - 1] = category; //将被点击的类别的category深度 传入 history数组中 下标要在深度基础上-1
       this.currentParentId = category.id; //就将这个类别的id传入当前的parentId中实现 查看的时候点击这个类别 这个类别的id传入全局变量
       this.loadCategoryList();//然后加载列表
     },
