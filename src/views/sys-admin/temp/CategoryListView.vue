@@ -30,6 +30,7 @@
       <el-table-column label="显示在导航栏" width="120" align="center">
         <template slot-scope="scope">
           <el-switch
+              @change="changeDisplay(scope.row)"
               v-model="scope.row.isDisplay"
               :active-value="1"
               :inactive-value="0"
@@ -66,10 +67,13 @@
           <el-input v-model="editForm.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="简介" :label-width="formLabelWidth">
-          <el-input v-model="editForm.description" autocomplete="off"></el-input>
+          <el-input v-model="editForm.keywords" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="排序序号" :label-width="formLabelWidth">
           <el-input v-model="editForm.sort" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="图标" :label-width="formLabelWidth">
+          <el-input v-model="editForm.icon" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -77,6 +81,7 @@
         <el-button type="primary" @click="submitEditForm()">确 定</el-button>
       </div>
     </el-dialog>
+
   </div>
 </template>
 
@@ -91,8 +96,9 @@ export default {
       editForm: {
         id: '',
         name: '',
-        description: '',
-        sort: ''
+        keywords: '',
+        sort: '',
+        icon: ''
       },
       formLabelWidth: '120px'
     }
@@ -145,6 +151,40 @@ export default {
         }
       });
     },
+    changeDisplay(category){
+      let displayText = ['隐藏','显示'];
+      let url = 'http://localhost:6080/categories/' + category.id;
+      let isDisplay = category.isDisplay;
+      if (isDisplay==1){
+        url += '/display';
+      } else {
+        url += '/hidden';
+      }
+      console.log('url= ' + url);
+
+      this.axios.post(url).then((response)=>{
+        let jsonResult = response.data;
+        if (jsonResult.state==20000){
+          this.$message({
+            message: displayText[isDisplay] + '[' + category.name + ']类别成功!',
+            type: 'success'
+          });
+          this.loadCategoryList();
+        } else if (jsonResult.state==40400){
+          this.$alert(jsonResult.message, '操作失败',{
+            confirmButtonText: '确定',
+            callback: action => {
+              this.loadCategoryList();
+            }
+          });
+        } else {
+          this.$alert(jsonResult.message, '操作失败', {
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
+        }
+      });
+    },
     showEditFormDialog(category) {
       let url = 'http://localhost:6080/categories/' + category.id;
       console.log('url = ' + url);
@@ -170,7 +210,7 @@ export default {
       });
     },
     submitEditForm(){
-      let url = 'http://localhost:6080/categorys/' + this.editForm.id + '/update';
+      let url = 'http://localhost:6080/categories/' + this.editForm.id + '/update';
       console.log('url = ' + url);
 
       let formData = this.qs.stringify(this.editForm);
