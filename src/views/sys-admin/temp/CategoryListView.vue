@@ -18,6 +18,7 @@
       <el-table-column label="是否启用" width="120" align="center">
         <template slot-scope="scope">
           <el-switch
+              @change="changeEnable(scope.row)"
               v-model="scope.row.enable"
               :active-value="1"
               :inactive-value="0"
@@ -48,6 +49,7 @@
           <el-button type="primary" icon="el-icon-edit" circle size="mini"
                      @click="showEditFormDialog(scope.row)"></el-button>
           <el-button type="danger" icon="el-icon-delete" circle size="mini"
+                     :disabled="scope.row.isParent==1"
                      @click="openDeleteConfirm(scope.row)"></el-button>
         </template>
       </el-table-column>
@@ -108,6 +110,40 @@ export default {
       this.history[category.depth - 1] = category; //将被点击的类别的category深度 传入 history数组中 下标要在深度基础上-1
       this.currentParentId = category.id; //就将这个类别的id传入当前的parentId中实现 查看的时候点击这个类别 这个类别的id传入全局变量
       this.loadCategoryList();//然后加载列表
+    },
+    changeEnable(category){
+      let enableText = ['禁用','启用'];
+      let url = 'http://localhost:6080/categories/' + category.id;
+      let enable = category.enable;
+      if (enable==1){
+        url += '/enable';
+      } else {
+        url += '/disable';
+      }
+      console.log('url= ' + url);
+
+      this.axios.post(url).then((response)=>{
+        let jsonResult = response.data;
+        if (jsonResult.state==20000){
+          this.$message({
+            message: enableText[enable] + '[' + category.name + ']类别成功!',
+            type: 'success'
+          });
+          this.loadCategoryList();
+        } else if (jsonResult.state==40400){
+          this.$alert(jsonResult.message, '操作失败',{
+            confirmButtonText: '确定',
+            callback: action => {
+              this.loadCategoryList();
+            }
+          });
+        } else {
+          this.$alert(jsonResult.message, '操作失败', {
+            confirmButtonText: '确定',
+            callback: action => {}
+          });
+        }
+      });
     },
     showEditFormDialog(category) {
       let url = 'http://localhost:6080/categories/' + category.id;
