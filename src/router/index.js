@@ -35,6 +35,14 @@ const routes = [
         path: '/sys-admin/temp/brand/list',
         component: () => import('../views/sys-admin/temp/BrandListView.vue')
       },
+      {
+        path: '/sys-admin/temp/admin/list',
+        component: () => import('../views/sys-admin/temp/AdminListView.vue')
+      },
+      {
+        path: '/sys-admin/temp/admin/add-new',
+        component: () => import('../views/sys-admin/temp/AdminAddNewView.vue')
+      },
     ]
   },
   {

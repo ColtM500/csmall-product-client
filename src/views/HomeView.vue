@@ -31,11 +31,11 @@
                     <i class="el-icon-s-tools"></i>
                     <span>临时页面</span>
                   </template>
-                  <el-menu-item index="2-1">
+                  <el-menu-item index="/sys-admin/temp/admin/add-new">
                     <i class="el-icon-circle-plus"></i>
                     <span>添加管理员</span>
                   </el-menu-item>
-                  <el-menu-item index="2-2">
+                  <el-menu-item index="/sys-admin/temp/admin/list">
                     <i class="el-icon-s-operation"></i>
                     <span>管理员列表</span>
                   </el-menu-item>
